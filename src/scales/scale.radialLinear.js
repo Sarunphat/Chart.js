@@ -241,6 +241,7 @@ module.exports = function(Chart) {
 		var opts = scale.options;
 		var angleLineOpts = opts.angleLines;
 		var pointLabelOpts = opts.pointLabels;
+		var backdropColorOpts = opts.labelBackdropColor;
 
 		ctx.lineWidth = angleLineOpts.lineWidth;
 		ctx.strokeStyle = angleLineOpts.color;
@@ -275,7 +276,12 @@ module.exports = function(Chart) {
 				var angle = helpers.toDegrees(angleRadians);
 				ctx.textAlign = getTextAlignForAngle(angle);
 				adjustPointPositionForLabelHeight(angle, scale._pointLabelSizes[i], pointLabelPosition);
-				fillRoundRect(ctx, pointLabelPosition.x - 5, pointLabelPosition.y - 5, 65, 30, 1);
+				// Add round reactangle backdrop behind label
+				ctx.save();
+				ctx.fillStyle = backdropColorOpts[i]; // new fill colour here
+				var size = scale._pointLabelSizes[i];
+				fillRoundRect(ctx, pointLabelPosition.x -(size.w / 2), pointLabelPosition.y - (size.h / 2), size.w, size.h, 5);
+				ctx.restore();
 				fillText(ctx, scale.pointLabels[i] || '', pointLabelPosition, plFont.size);
 			}
 		}
