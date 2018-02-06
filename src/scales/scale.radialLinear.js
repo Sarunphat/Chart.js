@@ -275,9 +275,22 @@ module.exports = function(Chart) {
 				var angle = helpers.toDegrees(angleRadians);
 				ctx.textAlign = getTextAlignForAngle(angle);
 				adjustPointPositionForLabelHeight(angle, scale._pointLabelSizes[i], pointLabelPosition);
+				var size = scale._pointLabelSizes[i];
+				fillRoundRect(ctx, pointLabelPosition.x -(size.w / 2), pointLabelPosition.y - (size.h / 2), size.w, size.h, 15)
 				fillText(ctx, scale.pointLabels[i] || '', pointLabelPosition, plFont.size);
 			}
 		}
+	}
+	
+	function fillRoundRect(ctx, l, t, w, h, r) {
+		var pi = Math.PI;
+		ctx.beginPath();
+		ctx.arc(l + r, t + r, r, - pi, - 0.5 * pi, false);
+		ctx.arc(l + w - r, t + r, r, - 0.5 * pi, 0, false);
+		ctx.arc(l + w - r, t + h - r, r, 0, 0.5 * pi, false);
+		ctx.arc(l + r, t + h - r, r, 0.5 * pi, pi, false);
+		ctx.closePath();
+		ctx.fill();
 	}
 
 	function drawRadiusLine(scale, gridLineOpts, radius, index) {
