@@ -252,6 +252,16 @@ module.exports = function(Chart) {
 		var plFont = getPointLabelFontOptions(scale);
 
 		ctx.textBaseline = 'top';
+		
+		const labelBackdropColor = [
+            "rgb(244, 135, 0)",
+            "rgb(240, 91, 34)",
+            "rgb(235, 50, 36)",
+            "rgb(191, 5, 19)",
+            "rgb(195, 11, 124)",
+            "rgb(181, 57, 143)",
+            "rgb(229, 176, 0)"
+        ];
 
 		for (var i = getValueCount(scale) - 1; i >= 0; i--) {
 			if (angleLineOpts.display) {
@@ -278,7 +288,7 @@ module.exports = function(Chart) {
 				adjustPointPositionForLabelHeight(angle, scale._pointLabelSizes[i], pointLabelPosition);
 				// Add round reactangle backdrop behind label
 				ctx.save();
-				ctx.fillStyle = backdropColorOpts[i]; // new fill colour here
+				ctx.fillStyle = labelBackdropColor[i]; // new fill colour here
 				var size = scale._pointLabelSizes[i];
 				fillRoundRect(ctx, pointLabelPosition.x -(size.w / 2), pointLabelPosition.y - (size.h / 2), size.w, size.h, 5);
 				ctx.restore();
