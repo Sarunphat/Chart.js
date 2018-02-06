@@ -290,11 +290,27 @@ module.exports = function(Chart) {
 				ctx.save();
 				ctx.fillStyle = labelBackdropColor[i]; // new fill colour here
 				var size = scale._pointLabelSizes[i];
-				fillRoundRect(ctx, pointLabelPosition.x -(size.w / 2), pointLabelPosition.y - (size.h / 2), size.w, size.h, 5);
+				const width = size.w * 1.2;
+				const realAngle = (360 - angle + 90) % 360;
+				const cosVal = precisionRound(Math.cos(realAngle * (Math.PI / 180)), 2);
+				var backgroundPosX = pointLabelPosition.x;
+				if (cosVal === 0) {
+					backgroundPosX = pointLabelPosition.x - (width / 2)
+				} else if (cosVal > 0) {
+					backgroundPosX = backgroundPosX - 15;
+				} else if (cosVal < 0) {
+					backgroundPosX = backgroundPosX - width + 15;
+				}
+				fillRoundRect(ctx, backgroundPosX, pointLabelPosition.y - size.h * 0.2, width, size.h * 2.2, 5);
 				ctx.restore();
 				fillText(ctx, scale.pointLabels[i] || '', pointLabelPosition, plFont.size);
 			}
 		}
+	}
+	
+	function precisionRound(number, precision) {
+		var factor = Math.pow(10, precision);
+		return Math.round(number * factor) / factor;
 	}
 	
 	function fillRoundRect(ctx, l, t, w, h, r) {
