@@ -275,8 +275,7 @@ module.exports = function(Chart) {
 				var angle = helpers.toDegrees(angleRadians);
 				ctx.textAlign = getTextAlignForAngle(angle);
 				adjustPointPositionForLabelHeight(angle, scale._pointLabelSizes[i], pointLabelPosition);
-				var size = scale._pointLabelSizes[i];
-				fillRoundRect(ctx, pointLabelPosition.x -(size.w / 2), pointLabelPosition.y - (size.h / 2), size.w, size.h, 15)
+				fillRoundRect(ctx, pointLabelPosition.x - 5, pointLabelPosition.y - 5, 65, 30, 15);
 				fillText(ctx, scale.pointLabels[i] || '', pointLabelPosition, plFont.size);
 			}
 		}
