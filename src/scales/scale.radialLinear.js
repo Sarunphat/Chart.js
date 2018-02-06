@@ -264,7 +264,7 @@ module.exports = function(Chart) {
 
 			if (pointLabelOpts.display) {
 				// Extra 3px out for some label spacing
-				var pointLabelPosition = scale.getPointPosition(i, outerDistance + 5);
+				var pointLabelPosition = scale.getPointPosition(i, outerDistance + 15);
 
 				// Keep this in loop since we may support array properties here
 				var pointLabelFontColor = valueOrDefault(pointLabelOpts.fontColor, globalDefaults.defaultFontColor);
